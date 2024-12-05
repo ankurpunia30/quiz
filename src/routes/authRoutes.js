@@ -2,18 +2,12 @@ const express=require('express');
 const authController=require('../controllers/authController');
 const router=express.Router();
 
+const {user_login,user_logout,user_signup,forgot_password,reset_password}=require('../controllers/authController');
 
-
-//login
-router.post('/login',authController.user_login);
-//logout
-router.get('/logout',authController.user_logout);
-//signup
-router.post('/signup',authController.user_signup);
-//forgot password
-router.post('/forgotPassword',authController.forgot_password);
-
-//reset password
-router.post('/resetPassword',authController.reset_password);
+router.post('/login',user_login);
+router.post('/logout',user_logout);
+router.post('/signup',user_signup);
+router.post('/forgot-password',forgot_password);
+router.post('/reset-password',reset_password);
 
 module.exports=router;
