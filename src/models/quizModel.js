@@ -1,5 +1,46 @@
 const mongoose = require('mongoose');
 
+const questionSchema = new mongoose.Schema(
+    {
+        content: {
+            type: String,
+            required: [true, 'Question content is required'],
+            trim: true,
+        },
+        options: {
+            type: [String],
+            validate: {
+                validator: (arr) => arr.length >= 2,
+                message: 'There must be at least 2 options',
+            },
+            required: true,
+        },
+        correctAnswers: {
+            type: [String],
+            validate: {
+                validator: function (answers) {
+                    return answers.every((answer) => this.options.includes(answer));
+                },
+                message: 'Correct answers must be part of the options',
+            },
+            required: true,
+        },
+        type: {
+            type: String,
+            enum: ['single-choice', 'multiple-choice'],
+            default: 'single-choice',
+        },
+        difficulty: {
+            type: String,
+            enum: ['easy', 'medium', 'hard'],
+            default: 'medium',
+        },
+    },
+    {
+        _id: false, // Prevents creating a separate ID for each question
+    }
+);
+
 const quizSchema = new mongoose.Schema(
     {
         title: {
@@ -13,8 +54,7 @@ const quizSchema = new mongoose.Schema(
             trim: true,
         },
         questions: {
-            type: [mongoose.Schema.Types.ObjectId],
-            ref: 'Question',
+            type: [questionSchema], // Embed the question schema directly
             validate: {
                 validator: (arr) => arr.length > 0,
                 message: 'A quiz must have at least one question',

@@ -4,6 +4,7 @@ const app = express();
 const connectDB = require('./config/db');
 // Import the router from your authRoutes file
 const user= require('./routes/authRoutes');
+const quiz=require('./routes/quizRoutes');
 
 // Middleware to parse incoming JSON requests
 app.use(express.json());
@@ -18,6 +19,8 @@ app.get('/', (req, res) => {
 
 // Use the authRoutes for any requests starting with '/api/auth'
 app.use('/api/auth', user);
+//route for quiz
+app.use('/api/quiz',quiz);
 
 // Define the port for the app to listen on
 const PORT = process.env.PORT || 5000;
