@@ -1,4 +1,5 @@
 const express = require('express');
+const user=require('../models/userModel');
 const Quiz = require('../models/quizModel');
 
 // Creating a quiz
@@ -10,6 +11,12 @@ const createQuiz = async (req, res) => {
 
         // Create the quiz
         const newQuiz = await Quiz.create(data);
+        //we also need to add the quiz id to the user's quizzes array
+        await user.findByIdAndUpdate(creator, {
+            $push: { quizzesCreated: newQuiz._id },
+        }
+        )
+        
 
         // Respond with the created quiz
         res.status(201).json({
