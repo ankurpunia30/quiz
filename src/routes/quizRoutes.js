@@ -18,4 +18,12 @@ router.patch('/:id',authMiddlewarer,quizController.updateQuiz);
 // //deleting a quiz
 router.delete('/:id',authMiddlewarer,quizController.deleteQuiz);
 
+//start quiz
+router.post('/:id/start',authMiddlewarer,quizController.startQuiz);
+//submit quiz
+router.post('/:id/submit',authMiddlewarer,quizController.submitQuiz);
+
+
+//getting quiz results
+router.get('/:id/results',authMiddlewarer,quizController.getQuizResult);
 module.exports = router;

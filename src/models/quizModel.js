@@ -77,7 +77,7 @@ const quizSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            enum: ['active', 'inactive'],
+            enum: ['active', 'inactive','completed'],
             default: 'active',
             index: true,
         },
@@ -90,6 +90,7 @@ const quizSchema = new mongoose.Schema(
         participants: [
             {
                 type: mongoose.Schema.Types.ObjectId,
+                
                 ref: 'User',
             },
         ],
